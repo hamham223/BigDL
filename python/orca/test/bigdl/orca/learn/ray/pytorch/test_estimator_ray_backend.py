@@ -35,6 +35,7 @@ from bigdl.dllib.nncontext import init_nncontext
 from bigdl.orca.learn.pytorch import Estimator
 from bigdl.orca.data import SparkXShards
 from bigdl.orca.data.image.utils import chunks
+from bigdl.orca import init_orca_context, stop_orca_context
 
 import tempfile
 import shutil
@@ -198,6 +199,12 @@ def get_estimator(workers_per_node=1, model_fn=get_model, sync_stats=False,
 
 
 class TestPyTorchEstimator(TestCase):
+    def setUp(self):
+        init_orca_context(runtime="ray", address="localhost:6379")
+
+    def tearDown(self):
+        stop_orca_context()
+    
     def test_data_creator(self):
         estimator = get_estimator(workers_per_node=2)
         start_val_stats = estimator.evaluate(val_data_loader, batch_size=64)
