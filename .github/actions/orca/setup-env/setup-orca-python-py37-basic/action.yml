@@ -11,8 +11,7 @@ runs:
         sudo apt-get install wget
         wget https://github.com/actions/python-versions/releases/download/3.7.10-99135/python-3.7.10-linux-20.04-x64.tar.gz
         tar -xf *.tar.gz
-        cd python-3.7.10-linux-20.04-x64
-        python setup.py
+        pwd && ls
 
     - name: Set up Python 
       uses: actions/setup-python@v2
