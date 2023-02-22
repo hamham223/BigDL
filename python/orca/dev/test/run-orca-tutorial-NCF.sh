@@ -37,7 +37,7 @@ function stop_ray () {
     fi
 }
 
-set -ex
+# set -ex
 
 export FTP_URI=$FTP_URI
 export PYSPARK_PYTHON=python
