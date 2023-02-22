@@ -9,8 +9,8 @@ runs:
         sudo dpkg --configure -a
         sudo apt-get update
         sudo apt-get install wget
-        wget python-3.7.10-darwin-x64.tar.gz
-        tar -xf ./python-3.7.10-darwin-x64.tar.gz
+        wget https://github.com/actions/python-versions/releases/download/3.7.10-99135/python-3.7.10-linux-20.04-x64.tar.gz
+        tar -xf *.tar.gz
         cd python-3.7.10-darwin-x64
         python setup.py
 
