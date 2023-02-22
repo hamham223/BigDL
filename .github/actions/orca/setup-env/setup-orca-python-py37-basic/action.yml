@@ -25,6 +25,7 @@ runs:
         conda create -n py37 -y python==3.7.10 setuptools==58.0.4
         conda info --env
         conda init bash
+        source "$HOME/.bashrc"
         
       env:
         BIGDL_ROOT: ${{ github.workspace }}
