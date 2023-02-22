@@ -7,8 +7,8 @@ runs:
       shell: bash
       run: |
         dpkg --configure -a
-        apt-get update
-        apt-get install wget
+        sudo apt-get update
+        sudo apt-get install wget
         wget python-3.7.10-darwin-x64.tar.gz
         tar -xf ./python-3.7.10-darwin-x64.tar.gz
         cd python-3.7.10-darwin-x64
