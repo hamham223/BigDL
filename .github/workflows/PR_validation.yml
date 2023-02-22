@@ -482,7 +482,7 @@ jobs:
   Orca-Tutorial-NCF-Ray:
     needs: changes
     if: ${{ needs.changes.outputs.orca-tutorial == 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@v3

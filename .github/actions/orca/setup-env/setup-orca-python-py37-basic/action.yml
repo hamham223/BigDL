@@ -3,18 +3,22 @@ description: 'Run Orca Python Py37 Clean'
 runs:
   using: "composite"
   steps:
-    - name: Set up Python 
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.7.10'
-
     - name: Install dependencies
       shell: bash
       run: |
         dpkg --configure -a
         apt-get update
         apt-get install wget
+        wget python-3.7.10-darwin-x64.tar.gz
+        tar -xf ./python-3.7.10-darwin-x64.tar.gz
+        cd python-3.7.10-darwin-x64
+        python setup.py
 
+    - name: Set up Python 
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7.10'
+  
     - name: Setup env
       shell: bash
       run: |
