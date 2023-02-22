@@ -25,15 +25,6 @@ runs:
         conda create -n py37 -y python==3.7.10 setuptools==58.0.4
         conda info --env
         conda init bash
-    
-    - name: conda
-      shell: bash
-      run: |
-        source ~/.bashrc
-        conda activate py37
-        pip uninstall -y bigdl-friesian bigdl-friesian-spark3 bigdl-dllib bigdl-dllib-spark3 bigdl-orca pyspark bigdl-orca-spark3 bigdl-chronos bigdl-chronos-spark3 bigdl-friesian bigdl-friesian-spark3
-
-        pip install argparse pytest
         
       env:
         BIGDL_ROOT: ${{ github.workspace }}
