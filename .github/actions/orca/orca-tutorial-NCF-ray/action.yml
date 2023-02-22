@@ -17,7 +17,7 @@ runs:
         source activate py37
 
         export SPARK_LOCAL_HOSTNAME=localhost
-        bash python/dev/release_default_linux_spark313.sh default false false false -Ddata-store-url=$HTTP_URI -U
+        bash python/dev/release_default_linux_spark3.sh default false false false -Ddata-store-url=$HTTP_URI -U
         unset SPARK_HOME
         
         # install dlib
@@ -27,9 +27,9 @@ runs:
         # install requires
         pip install bigdl-orca-spark3[ray]
         pip install tensorflow==2.9.0
-        pip install torchmetrics==0.10.0
         pip install torch==1.7.1
         pip install torchvision==0.8.2
+        pip install torchmetrics==0.10.0
         pip install tqdm
         pip install pandas
 
