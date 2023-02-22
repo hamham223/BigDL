@@ -33,6 +33,7 @@ runs:
         pip install tqdm
         pip install pandas
         pip install scikit-learn
+        pip install pyarrow
 
         pip list
         export FTP_URI=${FTP_URI}
