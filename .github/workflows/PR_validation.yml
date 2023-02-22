@@ -62,7 +62,7 @@ permissions:
 jobs:
   changes:
     name: Paths filter
-    runs-on: [self-hosted, Gondolin, ubuntu-20.04-lts]
+    runs-on: ubuntu-latest
     outputs:
       friesian-pytest: ${{ steps.filter.outputs.friesian-pytest }}
       friesian-example: ${{ steps.filter.outputs.friesian-example }}
@@ -482,7 +482,7 @@ jobs:
   Orca-Tutorial-NCF-Ray:
     needs: changes
     if: ${{ needs.changes.outputs.orca-tutorial == 'true' }}
-    runs-on: [self-hosted, Gondolin, ubuntu-20.04-lts]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
