@@ -87,7 +87,7 @@ echo "#2 Running pytorch_train_spark_dataframe"
 start=$(date "+%s")
 
 python ./pytorch_train_spark_dataframe.py --backend $backend
-# python ./pytorch_predict_spark_dataframe.py --backend $backend
+python ./pytorch_predict_spark_dataframe.py --backend $backend
 python ./pytorch_resume_train_spark_dataframe.py --backend $backend
 
 now=$(date "+%s")
@@ -101,7 +101,7 @@ echo "#3 Running pytorch_train_xshards"
 start=$(date "+%s")
 
 python ./pytorch_train_xshards.py --backend $backend
-python ./pytorch_predict_xshards.py --backend $backend
+# python ./pytorch_predict_xshards.py --backend $backend
 python ./pytorch_resume_train_xshards.py --backend $backend
 
 now=$(date "+%s")
