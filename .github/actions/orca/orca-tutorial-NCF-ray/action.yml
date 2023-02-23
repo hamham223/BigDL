@@ -34,6 +34,7 @@ runs:
         pip install pandas
         pip install scikit-learn
         pip install pyarrow
+        pip install grpcio==1.43.0
 
         pip list
         export FTP_URI=${FTP_URI}
