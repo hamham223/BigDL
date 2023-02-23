@@ -25,7 +25,7 @@ runs:
         # install orca
         pip install -i https://pypi.org/simple python/orca/src/dist/bigdl_orca*-py3-none-manylinux1_x86_64.whl
         # install requires
-        pip install bigdl-orca-spark3[ray]
+        pip install --pre --upgrade bigdl-orca-spark3[ray]
         pip install tensorflow==2.9.0
         pip install torch==1.7.1
         pip install torchvision==0.8.2
