@@ -58,6 +58,8 @@ else
 fi
 echo "Start Orca NCF tutorial Test - $backend backend"
 
+echo "Dataset: ml-1m"
+
 # download dataset from ftp
 # rm -f ./orca-tutorial-ncf-dataset-compressed.zip
 rm -rf ml-1m
@@ -143,6 +145,97 @@ echo "#2 Running pytorch_train_spark_dataframe time used: $time2 seconds"
 echo "#3 Running pytorch_train_xshards time used: $time3 seconds"
 echo "#4 Running tf_train_spark_dataframe time used: $time4 seconds"
 echo "#5 Running tf_train_xshards time used: $time5 seconds"
+
+#clean dataset
+rm -rf ml-1m
+# rm -f orca-tutorial-ncf-dataset-compressed.zip
+
+echo "Dataset: ml-100k"
+
+# download dataset from ftp
+# rm -f ./orca-tutorial-ncf-dataset-compressed.zip
+rm -rf ml-100k
+# wget $FTP_URI/analytics-zoo-data/orca-tutorial-ncf-dataset-compressed.zip
+unzip orca-tutorial-ncf-dataset-compressed-100k.zip
+echo "Successfully got dataset from ftp"
+
+stop_ray $backend
+
+echo "#6 Running pytorch_train_dataloader"
+#timer
+start=$(date "+%s")
+
+python ./pytorch_train_dataloader.py --backend $backend --dataset ml-100k
+# pytorch dataloader does not have predict
+python ./pytorch_resume_train_dataloader.py --backend $backend --dataset ml-100k
+
+now=$(date "+%s")
+time1=$((now - start))
+
+clean
+stop_ray $backend
+
+echo "#7 Running pytorch_train_spark_dataframe"
+#timer
+start=$(date "+%s")
+
+python ./pytorch_train_spark_dataframe.py --backend $backend --dataset ml-100k
+# python ./pytorch_predict_spark_dataframe.py --backend $backend --dataset ml-100k
+python ./pytorch_resume_train_spark_dataframe.py --backend $backend --dataset ml-100k
+
+now=$(date "+%s")
+time2=$((now - start))
+
+clean
+stop_ray $backend
+
+echo "#8 Running pytorch_train_xshards"
+#timer
+start=$(date "+%s")
+
+python ./pytorch_train_xshards.py --backend $backend --dataset ml-100k
+# python ./pytorch_predict_xshards.py --backend $backend --dataset ml-100k
+python ./pytorch_resume_train_xshards.py --backend $backend --dataset ml-100k
+
+now=$(date "+%s")
+time3=$((now - start))
+
+clean
+stop_ray $backend
+
+echo "#9 Running tf_train_spark_dataframe"
+#timer
+start=$(date "+%s")
+
+python ./tf_train_spark_dataframe.py --backend $backend --dataset ml-100k
+python ./tf_predict_spark_dataframe.py --backend $backend --dataset ml-100k
+python ./tf_resume_train_spark_dataframe.py --backend $backend --dataset ml-100k
+
+now=$(date "+%s")
+time4=$((now - start))
+
+clean
+stop_ray $backend
+
+echo "#10 Running tf_train_xshards"
+#timer
+start=$(date "+%s")
+
+python ./tf_train_xshards.py --backend $backend --dataset ml-100k
+# python ./tf_predict_xshards.py --backend $backend --dataset ml-100k
+python ./tf_resume_train_xshards.py --backend $backend --dataset ml-100k
+
+now=$(date "+%s")
+time5=$((now - start))
+
+clean
+stop_ray $backend
+
+echo "#6 Running pytorch_train_dataloader time used: $time1 seconds"
+echo "#7 Running pytorch_train_spark_dataframe time used: $time2 seconds"
+echo "#8 Running pytorch_train_xshards time used: $time3 seconds"
+echo "#9 Running tf_train_spark_dataframe time used: $time4 seconds"
+echo "#10 Running tf_train_xshards time used: $time5 seconds"
 
 #clean dataset
 rm -rf ml-1m
