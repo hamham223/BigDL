@@ -22,8 +22,11 @@ function clean () {
     rm -f NCF_model
     rm -rf NCF_resume_model
     rm -f NCF_resume_model
+    rm -f *.h5
     rm -rf ./ml-1m/test*
     rm -rf ./ml-1m/train*
+    rm -rf ./ml-100k/train*
+    rm -rf ./ml-100k/test*
     rm -f config.json
     echo "done"
 }
@@ -85,7 +88,7 @@ echo "#2 Running pytorch_train_spark_dataframe"
 start=$(date "+%s")
 
 python ./pytorch_train_spark_dataframe.py --backend $backend
-python ./pytorch_predict_spark_dataframe.py --backend $backend
+# python ./pytorch_predict_spark_dataframe.py --backend $backend
 python ./pytorch_resume_train_spark_dataframe.py --backend $backend
 
 now=$(date "+%s")
@@ -144,4 +147,4 @@ echo "#5 Running tf_train_xshards time used: $time5 seconds"
 
 #clean dataset
 rm -rf ml-1m
-rm -f orca-tutorial-ncf-dataset-compressed.zip
+# rm -f orca-tutorial-ncf-dataset-compressed.zip
