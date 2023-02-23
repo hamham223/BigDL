@@ -23,11 +23,10 @@ function clean () {
     rm -rf NCF_resume_model
     rm -f NCF_resume_model
     rm -f *.h5
-    rm -rf ./ml-1m/test*
-    rm -rf ./ml-1m/train*
-    rm -rf ./ml-100k/train*
-    rm -rf ./ml-100k/test*
+    rm -rf ./test*
+    rm -rf ./train*
     rm -f config.json
+    rm -rf logs/
     echo "done"
 }
 
@@ -130,7 +129,7 @@ echo "#5 Running tf_train_xshards"
 start=$(date "+%s")
 
 python ./tf_train_xshards.py --backend $backend
-python ./tf_predict_xshards.py --backend $backend
+# python ./tf_predict_xshards.py --backend $backend
 python ./tf_resume_train_xshards.py --backend $backend
 
 now=$(date "+%s")
