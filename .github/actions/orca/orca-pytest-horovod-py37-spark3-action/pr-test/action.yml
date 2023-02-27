@@ -25,7 +25,10 @@ runs:
         pip install pandas
 
         pip install cmake mxnet==1.6.0
-        HOROVOD_WITH_PYTORCH=1; HOROVOD_WITH_GLOO=1; pip install --no-cache-dir horovod==0.19.2
+        export HOROVOD_WITH_PYTORCH=1
+        export HOROVOD_WITH_GLOO=1
+        export HOROVOD_WITH_TENSORFLOW=1
+        pip install --no-cache-dir horovod==0.19.2
         pip install grpcio==1.43.0
 
         chmod a+x python/orca/dev/test/run-pytests-horovod.sh
