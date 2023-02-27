@@ -18,7 +18,9 @@ runs:
         
         pip install --pre --upgrade bigdl-orca-spark3[ray]
         pip install grpcio==1.43.0
-        
+
+        pip install pytest      
+
         chmod a+x python/orca/dev/test/run-pytests-horovod.sh
         python/orca/dev/test/run-pytests-horovod.sh
         ray stop -f
