@@ -4,24 +4,25 @@ runs:
   using: "composite"
   steps:
     - name: Run Test
-      shell: bash
+      shell: bash -l {0}
       run: |
-        source activate py37
+        # source activate py37
         export SPARK_LOCAL_HOSTNAME=localhost
-        bash python/dev/release_default_linux_spark3.sh default false false false -Ddata-store-url=$HTTP_URI -U
+        # bash python/dev/release_default_linux_spark3.sh default false false false -Ddata-store-url=$HTTP_URI -U
         
         # install dllib
-        pip install -i https://pypi.org/simple python/dllib/src/dist/bigdl_dllib*-py3-none-manylinux1_x86_64.whl
+        # pip install -i https://pypi.org/simple python/dllib/src/dist/bigdl_dllib*-py3-none-manylinux1_x86_64.whl
 
         # install orca
-        pip install -i https://pypi.org/simple python/orca/src/dist/bigdl_orca*-py3-none-manylinux1_x86_64.whl
+        # pip install -i https://pypi.org/simple python/orca/src/dist/bigdl_orca*-py3-none-manylinux1_x86_64.whl
         
-        pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} grpcio==1.43.0
+        pip install bigdl-orca-spark3[ray]
+        pip install grpcio==1.43.0
         
         chmod a+x python/orca/dev/test/run-pytests-horovod.sh
         python/orca/dev/test/run-pytests-horovod.sh
-        ray stop
-        source deactivate
+        ray stop -f
+        # source deactivate
       env:
         BIGDL_ROOT: ${{ github.workspace }}
         ANALYTICS_ZOO_ROOT: ${{ github.workspace }}
