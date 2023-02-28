@@ -32,5 +32,7 @@ if [[ ! -z "${DATA_STORE_URI}" ]]; then
 fi
 
 cd ../../
-python -m pytest -v test/bigdl/orca/torch/*.py
+python -m pytest -v test/bigdl/orca/torch/test_torch_optim.py
+python -m pytest -v test/bigdl/orca/torch/test_torch_estimator.py
+python -m pytest -v test/bigdl/orca/torch/test_torch.py
 python -m pytest -v test/bigdl/orca/learn/jep/*.py
