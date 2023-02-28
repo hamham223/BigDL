@@ -19,7 +19,6 @@
 cd "`dirname $0`"
 
 echo "Running Jep tests"
-set -ex
 
 if [[ ! -z "${DATA_STORE_URI}" ]]; then
     if [[ -d /tmp/datasets/ ]]; then
