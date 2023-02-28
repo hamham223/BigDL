@@ -25,7 +25,7 @@ runs:
         pip install --pre --upgrade bigdl-orca-spark3[ray]
         pip install torchvision
         pip install jep==3.9.0
-        pip install pyarrow
+        pip install cloudpickle
 
         chmod a+x python/orca/dev/test/run-pytests-jep.sh
         bash python/orca/dev/test/run-pytests-jep.sh
