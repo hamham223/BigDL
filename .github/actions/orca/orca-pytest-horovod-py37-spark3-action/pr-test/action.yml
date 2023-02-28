@@ -19,15 +19,15 @@ runs:
         pip install --pre --upgrade bigdl-orca-spark3[ray]
         
         pip install tensorflow==2.3.0
-        pip install torch==1.7.1
-        pip install torchvision==0.8.2
+        pip install torch==1.4.0
+        pip install torchvision==0.5.0
         pip install tqdm
         pip install pandas
 
         pip install cmake mxnet==1.6.0
-        export HOROVOD_WITH_PYTORCH=1
-        export HOROVOD_WITH_GLOO=1
-        export HOROVOD_WITH_TENSORFLOW=1
+        HOROVOD_WITH_PYTORCH=1
+        HOROVOD_WITH_GLOO=1
+        HOROVOD_WITH_TENSORFLOW=1
         pip install --no-cache-dir horovod==0.19.2
         pip install grpcio==1.43.0
 
