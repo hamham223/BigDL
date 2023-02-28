@@ -27,6 +27,7 @@ from bigdl.dllib.keras.optimizers import Adam
 from bigdl.dllib.optim.optimizer import MaxEpoch, EveryEpoch
 from bigdl.dllib.keras.metrics import Accuracy
 from bigdl.dllib.feature.common import FeatureSet
+from bigdl.orca import init_orca_context, stop_orca_context
 
 
 class TestPytorch(TestCase):
@@ -35,13 +36,13 @@ class TestPytorch(TestCase):
         """ setup any state tied to the execution of the given method in a
         class.  setup_method is invoked for every test method of a class.
         """
-        self.sc = init_spark_on_local(4)
+        self.sc = init_orca_context(cores=4)
 
     def tearDown(self):
         """ teardown any state that was previously setup with a setup_method
         call.
         """
-        self.sc.stop()
+        stop_orca_context()
 
     def test_train_model_with_bn_creator(self):
         class SimpleTorchModel(nn.Module):
