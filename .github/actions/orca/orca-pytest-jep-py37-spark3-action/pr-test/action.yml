@@ -26,6 +26,7 @@ runs:
         pip install torchvision
         pip install jep==3.9.0
         pip install cloudpickle
+        pip install pandas
 
         chmod a+x python/orca/dev/test/run-pytests-jep.sh
         bash python/orca/dev/test/run-pytests-jep.sh
