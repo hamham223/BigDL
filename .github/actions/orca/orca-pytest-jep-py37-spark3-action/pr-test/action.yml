@@ -22,7 +22,7 @@ runs:
         # pip uninstall -y opencv-python-headless
         # pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} opencv-python-headless
 
-        pip install bigdl-orca-spark3[ray]
+        pip install --pre --upgrade bigdl-orca-spark3[ray]
         pip install torchvision
         pip install jep==3.9.0
         pip install pyarrow
