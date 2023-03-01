@@ -24,7 +24,7 @@ runs:
         pip install tqdm
         pip install pandas
 
-        pip install cmake mxnet==1.6.0
+        pip install cmake
         HOROVOD_WITH_PYTORCH=1
         HOROVOD_WITH_GLOO=1
         HOROVOD_WITH_TENSORFLOW=1
