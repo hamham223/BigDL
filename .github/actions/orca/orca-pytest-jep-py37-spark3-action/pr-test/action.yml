@@ -23,7 +23,8 @@ runs:
         # pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} opencv-python-headless
 
         pip install --pre --upgrade bigdl-orca-spark3
-        pip install torchvision
+        pip install torch==1.7.1
+        pip install torchvision==0.8.2
         pip install jep==3.9.0
         pip install cloudpickle
         pip install pandas
