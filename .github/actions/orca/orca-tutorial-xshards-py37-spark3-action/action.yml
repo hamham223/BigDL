@@ -28,7 +28,7 @@ runs:
         # conda info -e
         # source activate orca-tutorial-xshards-py37
 
-        export SPARK_LOCAL_HOSTNAME=localhost
+        export SPARK_LOCAL_HOSTNAME=localhost6
         # bash python/dev/release_default_linux_spark3.sh default false false false -Ddata-store-url=$HTTP_URI -U
         
         # install dllib
@@ -39,7 +39,6 @@ runs:
 
         pip install bigdl-orca-spark3[ray]
         pip install tensorflow==1.15.0
-        pip install scikit-learn==0.22.2.post1
         pip install pandas
         pip install cloudpickle
         pip install scikit-learn==0.22.2.post1
