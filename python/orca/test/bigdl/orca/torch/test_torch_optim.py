@@ -56,8 +56,6 @@ class TestPytorchOptim(TestCase):
                 x = torch.sigmoid(self.dense2(x))
                 return x
 
-        self.sc.stop()
-        self.sc = init_nncontext()
         torch_model = SimpleTorchModel()
         loss_fn = torch.nn.BCELoss()
         torch_optim = torch.optim.Adam(torch_model.parameters())

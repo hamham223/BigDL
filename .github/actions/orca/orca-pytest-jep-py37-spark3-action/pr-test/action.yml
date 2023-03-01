@@ -4,27 +4,34 @@ runs:
   using: "composite"
   steps:
     - name: Run Test
-      shell: bash
+      shell: bash -l {0}
       run: |
-        source activate py37
+        # source activate py37
         export SPARK_LOCAL_HOSTNAME=localhost
 
-        bash python/dev/release_default_linux_spark3.sh default false false false -Ddata-store-url=$HTTP_URI -U
+        # bash python/dev/release_default_linux_spark3.sh default false false false -Ddata-store-url=$HTTP_URI -U
         
         # install dllib
-        pip install -i https://pypi.org/simple python/dllib/src/dist/bigdl_dllib*-py3-none-manylinux1_x86_64.whl
+        # pip install -i https://pypi.org/simple python/dllib/src/dist/bigdl_dllib*-py3-none-manylinux1_x86_64.whl
         # install orca
-        pip install -i https://pypi.org/simple python/orca/src/dist/bigdl_orca*-py3-none-manylinux1_x86_64.whl
+        # pip install -i https://pypi.org/simple python/orca/src/dist/bigdl_orca*-py3-none-manylinux1_x86_64.whl
 
-        wget https://raw.githubusercontent.com/analytics-zoo/gha-cicd-env/main/python-requirements/requirements-orca-python-jep.txt -O ${{ github.workspace }}/requirements-orca-python-jep.txt
-        pip uninstall -r ${{ github.workspace }}/requirements-orca-python-jep.txt -y
-        pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} -r ${{ github.workspace }}/requirements-orca-python-jep.txt
-        pip uninstall -y opencv-python-headless
-        pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} opencv-python-headless
+        # wget https://raw.githubusercontent.com/analytics-zoo/gha-cicd-env/main/python-requirements/requirements-orca-python-jep.txt -O ${{ github.workspace }}/requirements-orca-python-jep.txt
+        # pip uninstall -r ${{ github.workspace }}/requirements-orca-python-jep.txt -y
+        # pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} -r ${{ github.workspace }}/requirements-orca-python-jep.txt
+        # pip uninstall -y opencv-python-headless
+        # pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} opencv-python-headless
+
+        pip install --pre --upgrade bigdl-orca-spark3
+        pip install torch==1.7.1
+        pip install torchvision==0.8.2
+        pip install jep==3.9.0
+        pip install cloudpickle
+        pip install pandas
 
         chmod a+x python/orca/dev/test/run-pytests-jep.sh
         bash python/orca/dev/test/run-pytests-jep.sh
-        source deactivate
+        # source deactivate
       env:
         BIGDL_ROOT: ${{ github.workspace }}
         ANALYTICS_ZOO_ROOT: ${{ github.workspace }}
