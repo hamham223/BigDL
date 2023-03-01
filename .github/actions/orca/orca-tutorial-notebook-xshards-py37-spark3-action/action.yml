@@ -23,14 +23,13 @@ runs:
         pip install --pre --upgrade bigdl-orca-spark3[ray]
         
         pip install tensorflow==1.15.0
-        pip install pandas
         pip install jep==3.9.0
         pip install cloudpickle
         pip install jupyter
         pip install torch==1.7.1
         pip install torchvision==0.8.2
         pip install scikit-learn==0.22.2.post1
-        pip install matplotlib
+        pip install seaborn
         pip install grpcio==1.43.0
         
         pip list

@@ -21,7 +21,7 @@ runs:
         # pip uninstall -y tensorflow
 
         pip install --pre --upgrade bigdl-orca-spark3[ray]
-        pip install pandas
+        pip install seaborn
         pip install jep==3.9.0
         pip install cloudpickle
         pip install jupyter
