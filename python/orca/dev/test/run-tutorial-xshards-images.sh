@@ -52,12 +52,12 @@ echo "#2 image classification of pytorch"
 #timer
 start=$(date "+%s")
 
-if [ -f ${BIGDL_ROOT}/python/orca/tutorial/xshards/dogs-vs-cats/ ]
-then
-    echo "dogs-vs-cats already exists"
-else
-    wget -r -np -nH --cut-dirs=2  $FTP_URI/analytics-zoo-data/xshards/dogs-vs-cats/ -P ${BIGDL_ROOT}/python/orca/tutorial/xshards/
-fi
+# if [ -f ${BIGDL_ROOT}/python/orca/tutorial/xshards/dogs-vs-cats/ ]
+# then
+#     echo "dogs-vs-cats already exists"
+# else
+#     wget -r -np -nH --cut-dirs=2  $FTP_URI/analytics-zoo-data/xshards/dogs-vs-cats/ -P ${BIGDL_ROOT}/python/orca/tutorial/xshards/
+# fi
 
 filename=image_classification_py
 ${BIGDL_ROOT}/python/orca/dev/colab-notebook/ipynb2py.sh ${filename}
@@ -71,12 +71,12 @@ time2=$((now - start))
 
 echo "#3 image segmentation of tensorflow"
 start=$(date "+%s")
-if [ -f ${BIGDL_ROOT}/python/orca/tutorial/xshards/petsdata/ ]
-then
-    echo "petsdata already exists"
-else
-    wget -r -np -nH --cut-dirs=2  $FTP_URI/analytics-zoo-data/xshards/petsdata/ -P ${BIGDL_ROOT}/python/orca/tutorial/xshards/
-fi
+# if [ -f ${BIGDL_ROOT}/python/orca/tutorial/xshards/petsdata/ ]
+# then
+#     echo "petsdata already exists"
+# else
+#     wget -r -np -nH --cut-dirs=2  $FTP_URI/analytics-zoo-data/xshards/petsdata/ -P ${BIGDL_ROOT}/python/orca/tutorial/xshards/
+# fi
 
 filename=segmentation_tf
 ${BIGDL_ROOT}/python/orca/dev/colab-notebook/ipynb2py.sh ${filename}
