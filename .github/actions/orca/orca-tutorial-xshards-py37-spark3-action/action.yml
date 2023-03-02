@@ -45,6 +45,7 @@ runs:
         pip install torch==1.7.1
         pip install torchvision==0.8.2
         pip install jep==3.9.0
+        pip install pyarrow
         pip install grpcio==1.43.0
         
         pip install pytest
