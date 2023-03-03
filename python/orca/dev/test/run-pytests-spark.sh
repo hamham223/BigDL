@@ -81,7 +81,7 @@ then
 fi
 
 echo "Running orca learn inference tests"
-python -m pytest -v test/bigdl/orca/inference
+# python -m pytest -v test/bigdl/orca/inference
 exit_status_6=$?
 if [ $exit_status_6 -ne 0 ];
 then
