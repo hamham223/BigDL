@@ -484,7 +484,8 @@ jobs:
 
   Orca-Pytest-AutoML-Py37-Spark3:
     # if: ${{ github.event.schedule || github.event.inputs.artifact == 'Orca-Pytest-AutoML-Py37-Spark3' || github.event.inputs.artifact == 'all' }}
-    runs-on: [self-hosted, Gondolin, ubuntu-20.04-lts]
+    # runs-on: [self-hosted, Gondolin, ubuntu-20.04-lts]
+    runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@v3
