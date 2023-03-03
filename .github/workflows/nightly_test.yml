@@ -2,7 +2,7 @@ name: Nightly Test
 
 on:
 
-  #pull_request:
+  pull_request:
     #branchs: [ main ]
 
   schedule:
@@ -365,8 +365,9 @@ jobs:
         runner-hosted-on: 'Shanghai'
 
   Orca-Pytest-Ray-Py37-Spark3:
-    if: ${{ github.event.schedule || github.event.inputs.artifact == 'Orca-Pytest-Ray-Py37-Spark3' || github.event.inputs.artifact == 'all' }}
-    runs-on: [self-hosted, Gondolin, ubuntu-20.04-lts]
+    #if: ${{ github.event.schedule || github.event.inputs.artifact == 'Orca-Pytest-Ray-Py37-Spark3' || github.event.inputs.artifact == 'all' }}
+    #runs-on: [self-hosted, Gondolin, ubuntu-20.04-lts]
+    runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@v3
@@ -375,7 +376,7 @@ jobs:
     - name: Set up maven
       uses: ./.github/actions/maven-setup-action
     - name: Setup env
-      uses: ./.github/actions/orca/setup-env/setup-orca-python-py37-spark3
+      uses: ./.github/actions/orca/setup-env/setup-orca-python-py37-basic
     - name: Run Test
       uses: ./.github/actions/orca/orca-pytest-ray-py37-spark3-action/nightly-test
     - name: Remove Env
@@ -394,8 +395,9 @@ jobs:
         runner-hosted-on: 'Shanghai'
 
   Orca-Pytest-Py37-Spark3-Tf1:
-    if: ${{ github.event.schedule || github.event.inputs.artifact == 'Orca-Pytest-Tf1-Py37-Spark3' || github.event.inputs.artifact == 'all' }}
-    runs-on: [self-hosted, Gondolin, ubuntu-20.04-lts]
+    #if: ${{ github.event.schedule || github.event.inputs.artifact == 'Orca-Pytest-Tf1-Py37-Spark3' || github.event.inputs.artifact == 'all' }}
+    #runs-on: [self-hosted, Gondolin, ubuntu-20.04-lts]
+    runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@v3
@@ -404,7 +406,7 @@ jobs:
     - name: Set up maven
       uses: ./.github/actions/maven-setup-action
     - name: Setup env
-      uses: ./.github/actions/orca/setup-env/setup-orca-python-py37-spark3
+      uses: ./.github/actions/orca/setup-env/setup-orca-python-py37-basic
     - name: Run Test
       uses: ./.github/actions/orca/orca-pytest-py37-spark3-tf1-action/nightly-test
     - name: Remove Env
