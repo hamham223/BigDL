@@ -14,13 +14,13 @@ runs:
         
         pip install -i https://pypi.python.org/simple --pre --upgrade bigdl-orca-spark3
 
-        pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} torch==1.7.1
-        pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} torchvision==0.8.2
-        pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} torchmetrics==0.10.0
-        # pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} tensorflow==2.9.0
-        pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} pyarrow==4.0.1
-        pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} pandas==1.1.5
-        pip install -i ${GONDOLIN_PIP_MIRROR} --trusted-host ${GONDOLIN_TRUSTED_HOST} h5py==2.10.0	
+        pip install torch==1.7.1
+        pip install torchvision==0.8.2
+        pip install torchmetrics==0.10.0
+        # pip install tensorflow==2.9.0
+        pip install pyarrow==4.0.1
+        pip install pandas==1.1.5
+        pip install h5py==2.10.0	
 
         chmod a+x python/orca/dev/test/run-pytests-spark.sh
         python/orca/dev/test/run-pytests-spark.sh
