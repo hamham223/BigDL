@@ -684,6 +684,7 @@ class TestTFRayEstimator(TestCase):
         finally:
             os.remove("/tmp/cifar10_keras.ckpt")
     
+class TestRandomFail(TestCase):
     def test_save_load_model_h5(self):
         sc = OrcaContext.get_spark_context()
         rdd = sc.range(0, 100)
