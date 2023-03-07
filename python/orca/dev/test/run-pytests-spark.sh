@@ -55,8 +55,8 @@ if [ $python_version == 3.7.10 ];then
 else
   python -m pytest -v test/bigdl/orca/data \
         --ignore=test/bigdl/orca/data/test_xshards_partition.py \
-        --ignore=test/bigdl/orca/data/ray \
-        --ignore=test/bigdl/orca/data/test_write_parquet.py
+        --ignore=test/bigdl/orca/data/ray
+        # --ignore=test/bigdl/orca/data/test_write_parquet.py
 fi
 exit_status_3=$?
 if [ $exit_status_3 -ne 0 ];

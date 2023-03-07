@@ -172,46 +172,46 @@ def test_write_voc(orca_context_fixture, use_api=False):
         shutil.rmtree(temp_dir)
 
 
-def test_train_simple(orca_context_fixture):
-    sc = orca_context_fixture
-    temp_dir = tempfile.mkdtemp()
-
-    try:
-        _write_ndarrays(images=np.random.randn(500, 28, 28, 1).astype(np.float32),
-                        labels=np.random.randint(0, 10, (500,)).astype(np.int32),
-                        output_path="file://" + temp_dir)
-        dataset = ParquetDataset.read_as_tf("file://" + temp_dir)
-
-        def preprocess(data):
-            return data['image'], data["label"]
-
-        dataset = dataset.map(preprocess)
-
-        import tensorflow as tf
-        model = tf.keras.Sequential(
-            [tf.keras.layers.Conv2D(20, kernel_size=(5, 5), strides=(1, 1), activation='tanh',
-                                    input_shape=(28, 28, 1), padding='valid'),
-             tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='valid'),
-             tf.keras.layers.Conv2D(50, kernel_size=(5, 5), strides=(1, 1), activation='tanh',
-                                    padding='valid'),
-             tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='valid'),
-             tf.keras.layers.Flatten(),
-             tf.keras.layers.Dense(500, activation='tanh'),
-             tf.keras.layers.Dense(10, activation='softmax'),
-             ]
-        )
-
-        model.compile(optimizer=tf.keras.optimizers.RMSprop(),
-                      loss='sparse_categorical_crossentropy',
-                      metrics=['accuracy'])
-
-        est = Estimator.from_keras(keras_model=model)
-        est.fit(data=dataset,
-                batch_size=100,
-                epochs=1)
-
-    finally:
-        shutil.rmtree(temp_dir)
+#def test_train_simple(orca_context_fixture):
+    #sc = orca_context_fixture
+    #temp_dir = tempfile.mkdtemp()
+#
+    #try:
+    #    _write_ndarrays(images=np.random.randn(500, 28, 28, 1).astype(np.float32),
+    #                    labels=np.random.randint(0, 10, (500,)).astype(np.int32),
+    #                    output_path="file://" + temp_dir)
+    #    dataset = ParquetDataset.read_as_tf("file://" + temp_dir)
+#
+    #    def preprocess(data):
+    #        return data['image'], data["label"]
+#
+    #    dataset = dataset.map(preprocess)
+#
+    #    import tensorflow as tf
+    #    model = tf.keras.Sequential(
+    #        [tf.keras.layers.Conv2D(20, kernel_size=(5, 5), strides=(1, 1), activation='tanh',
+    #                                input_shape=(28, 28, 1), padding='valid'),
+    #         tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='valid'),
+    #         tf.keras.layers.Conv2D(50, kernel_size=(5, 5), strides=(1, 1), activation='tanh',
+    #                                padding='valid'),
+    #         tf.keras.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2), padding='valid'),
+    #         tf.keras.layers.Flatten(),
+    #         tf.keras.layers.Dense(500, activation='tanh'),
+    #         tf.keras.layers.Dense(10, activation='softmax'),
+    #         ]
+    #    )
+#
+    #    model.compile(optimizer=tf.keras.optimizers.RMSprop(),
+    #                  loss='sparse_categorical_crossentropy',
+    #                  metrics=['accuracy'])
+#
+    #    est = Estimator.from_keras(keras_model=model)
+    #    est.fit(data=dataset,
+    #            batch_size=100,
+    #            epochs=1)
+#
+    #finally:
+    #    shutil.rmtree(temp_dir)
 
 
 def test_write_from_directory(orca_context_fixture, use_api=False):
