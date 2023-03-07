@@ -23,7 +23,7 @@ import os
 from bigdl.orca.data.image.parquet_dataset import ParquetDataset
 from bigdl.orca.data.image.parquet_dataset import _write_ndarrays, write_from_directory, write_parquet
 from bigdl.orca.data.image.utils import DType, FeatureType, SchemaField
-from bigdl.orca.learn.tf.estimator import Estimator
+# from bigdl.orca.learn.tf.estimator import Estimator
 from bigdl.orca.data.image import write_mnist, write_voc
 
 resource_path = os.path.join(os.path.split(__file__)[0], "../resources")
