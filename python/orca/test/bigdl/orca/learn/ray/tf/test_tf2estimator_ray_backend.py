@@ -680,6 +680,7 @@ class TestTF2EstimatorRayBackend(TestCase):
         finally:
             os.remove("/tmp/cifar10_keras.ckpt")
     
+class TestRandomFail(TestCase):
     def test_save_load_model_h5(self):
         sc = OrcaContext.get_spark_context()
         rdd = sc.range(0, 100)
@@ -945,6 +946,7 @@ class TestTF2EstimatorRayBackend(TestCase):
         finally:
             shutil.rmtree(temp_dir)
 
+class TestOther(TestCase):
     def test_array_string_input(self):
 
         def model_creator(config):

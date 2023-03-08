@@ -249,7 +249,6 @@ class TestTFHorovodEstimator(TestCase):
             # skip tests in horovod lower version
             pass
     
-
     # TODO: modify this ut to be compatible with tensorflow 2.9.0
     def test_string_input(self):
 
