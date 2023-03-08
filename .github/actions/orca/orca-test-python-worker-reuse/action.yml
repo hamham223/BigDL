@@ -18,8 +18,8 @@ runs:
         pip install scikit-optimize==0.8.1
         pip install grpcio==1.43.0
 
-        chmod a+x python/orca/dev/test/run-pytests-resue.sh
-        python/orca/dev/test/run-pytests-resue.sh
+        chmod a+x python/orca/dev/test/run-pytests-reuse.sh
+        python/orca/dev/test/run-pytests-reuse.sh
         # source deactivate
       env:
         BIGDL_ROOT: ${{ github.workspace }}
