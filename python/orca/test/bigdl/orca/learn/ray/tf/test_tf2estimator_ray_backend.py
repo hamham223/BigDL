@@ -782,6 +782,8 @@ class TestRandomFail(TestCase):
             rdd = sc.range(0, 100)
             df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
                                 int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
+            import copy
+            ddf = copy.deepcopy(df)
 
             before_res = trainer.predict(df, feature_cols=["feature"]).collect()
             expect_res = np.concatenate([part["prediction"] for part in before_res])
@@ -794,7 +796,7 @@ class TestRandomFail(TestCase):
                                 int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
             # continous predicting
-            after_res = trainer.predict(df, feature_cols=["feature"]).collect()
+            after_res = trainer.predict(ddf, feature_cols=["feature"]).collect()
             pred_res = np.concatenate([part["prediction"] for part in after_res])
 
             assert np.array_equal(expect_res, pred_res)
