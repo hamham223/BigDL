@@ -778,6 +778,7 @@ class TestRandomFail(TestCase):
 
             a = df.head(50)
             print("after fit+evaluate:" + str(a))
+            b = df.copy()
             before_res = trainer.predict(df, feature_cols=["feature"]).collect()
             expect_res = np.concatenate([part["prediction"] for part in before_res])
 
@@ -785,8 +786,9 @@ class TestRandomFail(TestCase):
             
             a = df.head(50)
             print("after one predict:" + str(a))
+            print("a copy: "+ str(b))
             # continous predicting
-            after_res = trainer.predict(df, feature_cols=["feature"]).collect()
+            after_res = trainer.predict(b, feature_cols=["feature"]).collect()
             pred_res = np.concatenate([part["prediction"] for part in after_res])
 
             a = df.head(50)
