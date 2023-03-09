@@ -778,7 +778,12 @@ class TestRandomFail(TestCase):
 
             a = df.head(50)
             print("after fit+evaluate:" + str(a))
-            b = df.copy()
+            np.random.seed(1337)
+            rdd = sc.range(0,100)
+            df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
+                        int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
+            a = df.head(50)
+            print("regenerate: " + str(a))
             before_res = trainer.predict(df, feature_cols=["feature"]).collect()
             expect_res = np.concatenate([part["prediction"] for part in before_res])
 
@@ -786,9 +791,14 @@ class TestRandomFail(TestCase):
             
             a = df.head(50)
             print("after one predict:" + str(a))
-            print("a copy: "+ str(b))
+            np.random.seed(1337)
+            rdd = sc.range(0,100)
+            df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
+                        int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
+            a = df.head(50)
+            print("regenerate: " + str(a))
             # continous predicting
-            after_res = trainer.predict(b, feature_cols=["feature"]).collect()
+            after_res = trainer.predict(df, feature_cols=["feature"]).collect()
             pred_res = np.concatenate([part["prediction"] for part in after_res])
 
             a = df.head(50)
