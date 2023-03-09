@@ -22,7 +22,7 @@ from pyspark.sql import SparkSession
 @pytest.fixture(autouse=True, scope='function')
 def orca_context_fixture():
     conf = {"spark.python.worker.reuse": "false"}
-    sc = init_orca_context()
+    sc = init_orca_context(conf=conf)
 
     def to_array_(v):
         return v.toArray().tolist()

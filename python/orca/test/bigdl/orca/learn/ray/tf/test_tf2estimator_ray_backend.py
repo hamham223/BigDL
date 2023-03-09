@@ -794,6 +794,7 @@ class TestRandomFail(TestCase):
             a = df.head(100)
             print("after the second predict:" + str(a))
             assert np.array_equal(expect_res, pred_res)
+            assert False
 
             # continous training
             res = trainer.fit(df, epochs=5, batch_size=4, steps_per_epoch=25,
