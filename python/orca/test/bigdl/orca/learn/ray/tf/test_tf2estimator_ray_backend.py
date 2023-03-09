@@ -824,6 +824,15 @@ class TestRandomFail(TestCase):
 
             trainer.save(os.path.join(temp_dir, "cifar10.h5"))
 
+            trainer.shutdown()
+            trainer = Estimator.from_keras(
+                model_creator=model_creator,
+                verbose=True,
+                config=config,
+                workers_per_node=3,
+                backend="ray")
+            trainer.load(os.path.join(temp_dir, "cifar10.h5"))
+
             before_res = trainer.predict(df, feature_cols=["feature"]).collect()
             expect_res = np.concatenate([part["prediction"] for part in before_res])
             trainer.shutdown()
