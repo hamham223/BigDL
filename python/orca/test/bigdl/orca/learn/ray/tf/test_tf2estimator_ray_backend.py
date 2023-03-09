@@ -760,7 +760,7 @@ class TestRandomFail(TestCase):
                 model_creator=model_creator,
                 verbose=True,
                 config=config,
-                workers_per_node=3,
+                workers_per_node=1,
                 backend="ray")
 
             res = trainer.fit(df, epochs=5, batch_size=4, steps_per_epoch=25,
