@@ -30,6 +30,7 @@ from bigdl.orca.data.tf.data import Dataset
 from bigdl.orca.learn.tf2 import Estimator
 from bigdl.orca.ray import OrcaRayContext
 from bigdl.orca import OrcaContext
+from bigdl.orca import init_orca_context, stop_orca_context
 
 NUM_TRAIN_SAMPLES = 1000
 NUM_TEST_SAMPLES = 400
@@ -681,6 +682,11 @@ class TestTF2EstimatorRayBackend(TestCase):
             os.remove("/tmp/cifar10_keras.ckpt")
     
 class TestRandomFail(TestCase):
+    def setUp(self):
+        sc = init_orca_context()
+    def tearDown(self):
+        stop_orca_context()
+    
     def test_save_load_model_h5(self):
         sc = OrcaContext.get_spark_context()
         rdd = sc.range(0, 100)
@@ -782,13 +788,11 @@ class TestRandomFail(TestCase):
             rdd = sc.range(0, 100)
             df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
                                 int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
-            import copy
-            ddf = copy.deepcopy(df)
 
             before_res = trainer.predict(df, feature_cols=["feature"]).collect()
             expect_res = np.concatenate([part["prediction"] for part in before_res])
 
-            # trainer.load(os.path.join(temp_dir, "cifar10_savemodel"))
+            trainer.load(os.path.join(temp_dir, "cifar10_savemodel"))
             
             np.random.seed(1337)
             rdd = sc.range(0, 100)
@@ -796,7 +800,7 @@ class TestRandomFail(TestCase):
                                 int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
             # continous predicting
-            after_res = trainer.predict(ddf, feature_cols=["feature"]).collect()
+            after_res = trainer.predict(df, feature_cols=["feature"]).collect()
             pred_res = np.concatenate([part["prediction"] for part in after_res])
 
             assert np.array_equal(expect_res, pred_res)
