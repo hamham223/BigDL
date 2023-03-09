@@ -746,8 +746,8 @@ class TestRandomFail(TestCase):
         df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
                                 int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
-        a = df.head()
-        print(a)
+        a = df.head(5)
+        print("df generate:" + str(a))
 
         config = {
             "lr": 0.2
@@ -760,7 +760,7 @@ class TestRandomFail(TestCase):
                 model_creator=model_creator,
                 verbose=True,
                 config=config,
-                workers_per_node=1,
+                workers_per_node=3,
                 backend="ray")
 
             res = trainer.fit(df, epochs=5, batch_size=4, steps_per_epoch=25,
@@ -776,15 +776,15 @@ class TestRandomFail(TestCase):
                                    label_cols=["label"])
             print("validation result: ", res)
 
-            a = df.head()
-            print(a)
+            a = df.head(5)
+            print("df generate:" + str(a))
             before_res = trainer.predict(df, feature_cols=["feature"]).collect()
             expect_res = np.concatenate([part["prediction"] for part in before_res])
 
             trainer.load(os.path.join(temp_dir, "cifar10_savemodel"))
             
-            a = df.head()
-            print(a)
+            a = df.head(5)
+            print("df generate:" + str(a))
             # continous predicting
             after_res = trainer.predict(df, feature_cols=["feature"]).collect()
             pred_res = np.concatenate([part["prediction"] for part in after_res])
