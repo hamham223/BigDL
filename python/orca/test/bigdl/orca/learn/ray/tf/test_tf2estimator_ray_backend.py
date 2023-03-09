@@ -789,6 +789,7 @@ class TestRandomFail(TestCase):
             # trainer.load(os.path.join(temp_dir, "cifar10_savemodel"))
             
             np.random.seed(1337)
+            rdd = sc.range(0, 100)
             df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
                                 int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
