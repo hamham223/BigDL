@@ -746,6 +746,9 @@ class TestRandomFail(TestCase):
         df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
                                 int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
+        a = df.head()
+        print(a)
+
         config = {
             "lr": 0.2
         }
@@ -765,11 +768,6 @@ class TestRandomFail(TestCase):
                               label_cols=["label"],
                               validation_data=df,
                               validation_steps=1)
-            
-            np.random.seed(1337)
-            rdd = sc.range(0, 100)
-            df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
-                                int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
             print("start saving")
             trainer.save(os.path.join(temp_dir, "cifar10_savemodel"))
@@ -778,21 +776,15 @@ class TestRandomFail(TestCase):
                                    label_cols=["label"])
             print("validation result: ", res)
 
-            np.random.seed(1337)
-            rdd = sc.range(0, 100)
-            df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
-                                int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
-
+            a = df.head()
+            print(a)
             before_res = trainer.predict(df, feature_cols=["feature"]).collect()
             expect_res = np.concatenate([part["prediction"] for part in before_res])
 
             trainer.load(os.path.join(temp_dir, "cifar10_savemodel"))
             
-            np.random.seed(1337)
-            rdd = sc.range(0, 100)
-            df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
-                                int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
-
+            a = df.head()
+            print(a)
             # continous predicting
             after_res = trainer.predict(df, feature_cols=["feature"]).collect()
             pred_res = np.concatenate([part["prediction"] for part in after_res])
