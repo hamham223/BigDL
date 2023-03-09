@@ -767,7 +767,7 @@ class TestRandomFail(TestCase):
                               validation_steps=1)
             
             np.random.seed(1337)
-
+            rdd = sc.range(0, 100)
             df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
                                 int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
@@ -779,6 +779,7 @@ class TestRandomFail(TestCase):
             print("validation result: ", res)
 
             np.random.seed(1337)
+            rdd = sc.range(0, 100)
             df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
                                 int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
