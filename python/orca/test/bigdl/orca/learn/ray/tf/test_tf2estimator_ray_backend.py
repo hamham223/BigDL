@@ -765,6 +765,9 @@ class TestRandomFail(TestCase):
                               label_cols=["label"],
                               validation_data=df,
                               validation_steps=1)
+            
+            df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
+                                int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
             print("start saving")
             trainer.save(os.path.join(temp_dir, "cifar10_savemodel"))
@@ -773,11 +776,17 @@ class TestRandomFail(TestCase):
                                    label_cols=["label"])
             print("validation result: ", res)
 
+            df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
+                                int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
+
             before_res = trainer.predict(df, feature_cols=["feature"]).collect()
             expect_res = np.concatenate([part["prediction"] for part in before_res])
 
             # trainer.load(os.path.join(temp_dir, "cifar10_savemodel"))
             
+            df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
+                                int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
+
             # continous predicting
             after_res = trainer.predict(df, feature_cols=["feature"]).collect()
             pred_res = np.concatenate([part["prediction"] for part in after_res])
