@@ -746,8 +746,8 @@ class TestRandomFail(TestCase):
         df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
                                 int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
-        a = df.head(50)
-        print("df generate:" + str(a))
+        a = df.head(100)
+        print("at df generate:" + str(a))
 
         config = {
             "lr": 0.2
@@ -772,37 +772,27 @@ class TestRandomFail(TestCase):
             print("start saving")
             trainer.save(os.path.join(temp_dir, "cifar10_savemodel"))
 
+            a = df.head(100)
+            print("after fit, before evaluate:" + str(a))
             res = trainer.evaluate(df, batch_size=4, num_steps=25, feature_cols=["feature"],
                                    label_cols=["label"])
             print("validation result: ", res)
 
-            a = df.head(50)
-            print("after fit+evaluate:" + str(a))
-            np.random.seed(1337)
-            rdd = sc.range(0,100)
-            df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
-                        int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
-            a = df.head(50)
-            print("regenerate: " + str(a))
+            a = df.head(100)
+            print("after evaluate, before first predict:" + str(a))
             before_res = trainer.predict(df, feature_cols=["feature"]).collect()
             expect_res = np.concatenate([part["prediction"] for part in before_res])
 
             trainer.load(os.path.join(temp_dir, "cifar10_savemodel"))
             
-            a = df.head(50)
-            print("after one predict:" + str(a))
-            np.random.seed(1337)
-            rdd = sc.range(0,100)
-            df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
-                        int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
-            a = df.head(50)
-            print("regenerate: " + str(a))
+            a = df.head(100)
+            print("before the second predict:" + str(a))
             # continous predicting
             after_res = trainer.predict(df, feature_cols=["feature"]).collect()
             pred_res = np.concatenate([part["prediction"] for part in after_res])
 
-            a = df.head(50)
-            print("after two predict:" + str(a))
+            a = df.head(100)
+            print("after the second predict:" + str(a))
             assert np.array_equal(expect_res, pred_res)
 
             # continous training
