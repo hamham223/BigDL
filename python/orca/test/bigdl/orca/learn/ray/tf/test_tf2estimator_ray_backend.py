@@ -30,7 +30,6 @@ from bigdl.orca.data.tf.data import Dataset
 from bigdl.orca.learn.tf2 import Estimator
 from bigdl.orca.ray import OrcaRayContext
 from bigdl.orca import OrcaContext
-from bigdl.orca import init_orca_context, stop_orca_context
 
 NUM_TRAIN_SAMPLES = 1000
 NUM_TEST_SAMPLES = 400
@@ -681,12 +680,7 @@ class TestTF2EstimatorRayBackend(TestCase):
         finally:
             os.remove("/tmp/cifar10_keras.ckpt")
     
-class TestRandomFail(TestCase):
-    def setUp(self):
-        sc = init_orca_context()
-    def tearDown(self):
-        stop_orca_context()
-    
+class TestRandomFail(TestCase): 
     def test_save_load_model_h5(self):
         sc = OrcaContext.get_spark_context()
         rdd = sc.range(0, 100)
