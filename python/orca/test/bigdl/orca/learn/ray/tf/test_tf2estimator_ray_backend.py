@@ -743,10 +743,12 @@ class TestRandomFail(TestCase):
         spark = OrcaContext.get_spark_session()
 
         from pyspark.ml.linalg import DenseVector
-        np.random.seed(1337)
         df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
                                 int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
+
+        a = df.head(10)
+        print("at gen: " + str(a))
         config = {
             "lr": 0.2
         }
@@ -769,18 +771,26 @@ class TestRandomFail(TestCase):
 
             print("start saving")
             trainer.save(os.path.join(temp_dir, "cifar10_savemodel"))
+            a = df.head(10)
+            print("after fit: " + str(a))
 
             res = trainer.evaluate(df, batch_size=4, num_steps=25, feature_cols=["feature"],
                                    label_cols=["label"])
             print("validation result: ", res)
+            a = df.head(10)
+            print("after evaluate: " + str(a))
 
             before_res = trainer.predict(df, feature_cols=["feature"]).collect()
             expect_res = np.concatenate([part["prediction"] for part in before_res])
+            a = df.head(10)
+            print("after first predict: " + str(a))
 
             trainer.load(os.path.join(temp_dir, "cifar10_savemodel"))
             
             # continous predicting
             after_res = trainer.predict(df, feature_cols=["feature"]).collect()
+            a = df.head(10)
+            print("after second predict: " + str(a))
             pred_res = np.concatenate([part["prediction"] for part in after_res])
 
             assert np.array_equal(expect_res, pred_res)
