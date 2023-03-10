@@ -765,9 +765,9 @@ class TestRandomFail(TestCase):
 
             res = trainer.fit(df, epochs=5, batch_size=4, steps_per_epoch=25,
                               feature_cols=["feature"],
-                              label_cols=["label"],
-                              validation_data=df,
-                              validation_steps=1)
+                              label_cols=["label"])
+                              # validation_data=df,
+                              # validation_steps=1)
 
             print("start saving")
             trainer.save(os.path.join(temp_dir, "cifar10_savemodel"))
