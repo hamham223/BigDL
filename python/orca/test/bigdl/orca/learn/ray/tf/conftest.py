@@ -19,7 +19,7 @@ from pyspark.sql.types import ArrayType, DoubleType
 from pyspark.sql import SparkSession
 
 
-@pytest.fixture(autouse=True, scope='package')
+@pytest.fixture(autouse=True, scope='function')
 def orca_context_fixture():
     conf = {"spark.python.worker.reuse": "false"}
     sc = init_orca_context(cores=8, conf=conf)

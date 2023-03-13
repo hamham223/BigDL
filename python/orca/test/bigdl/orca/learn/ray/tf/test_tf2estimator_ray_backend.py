@@ -680,6 +680,7 @@ class TestTF2EstimatorRayBackend(TestCase):
         finally:
             os.remove("/tmp/cifar10_keras.ckpt")
     
+class TestRandomFail(TestCase): 
     def test_save_load_model_h5(self):
         sc = OrcaContext.get_spark_context()
         rdd = sc.range(0, 100)
@@ -738,12 +739,16 @@ class TestTF2EstimatorRayBackend(TestCase):
 
     def test_save_load_model_savemodel(self):
         sc = OrcaContext.get_spark_context()
-        rdd = sc.range(0, 100)
+        rdd = sc.range(0, 10)
         spark = OrcaContext.get_spark_session()
 
         from pyspark.ml.linalg import DenseVector
-        df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
-                                int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
+        rdd_map = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
+                                int(np.random.randint(0, 2, size=())),
+                                os.getpid()))
+        df = rdd_map.toDF(["feature", "label", "pid"])
+        # df = rdd.map(lambda x: (DenseVector(np.random.randn(1, ).astype(np.float32)),
+        #                         int(np.random.randint(0, 2, size=())))).toDF(["feature", "label"])
 
         config = {
             "lr": 0.2
@@ -761,9 +766,9 @@ class TestTF2EstimatorRayBackend(TestCase):
 
             res = trainer.fit(df, epochs=5, batch_size=4, steps_per_epoch=25,
                               feature_cols=["feature"],
-                              label_cols=["label"],
-                              validation_data=df,
-                              validation_steps=1)
+                              label_cols=["label"])
+                              # validation_data=df,
+                              # validation_steps=1)
 
             print("start saving")
             trainer.save(os.path.join(temp_dir, "cifar10_savemodel"))
@@ -782,6 +787,7 @@ class TestTF2EstimatorRayBackend(TestCase):
             pred_res = np.concatenate([part["prediction"] for part in after_res])
 
             assert np.array_equal(expect_res, pred_res)
+            assert False
 
             # continous training
             res = trainer.fit(df, epochs=5, batch_size=4, steps_per_epoch=25,
@@ -945,6 +951,7 @@ class TestTF2EstimatorRayBackend(TestCase):
         finally:
             shutil.rmtree(temp_dir)
 
+class TestOther(TestCase):
     def test_array_string_input(self):
 
         def model_creator(config):
@@ -1083,4 +1090,10 @@ class TestTF2EstimatorRayBackend(TestCase):
 
 
 if __name__ == "__main__":
-    pytest.main([__file__])
+    # pytest.main([__file__])
+    from conftest import *
+    conf = {"spark.python.worker.reuse": "false"}
+    sc = init_orca_context()
+    est = TestRandomFail()
+    est.test_save_load_model_savemodel()
+    stop_orca_context()

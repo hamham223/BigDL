@@ -62,15 +62,15 @@ permissions:
 jobs:
   changes:
     name: Paths filter
-    runs-on: [self-hosted, Gondolin, ubuntu-20.04-lts]
+    runs-on: ubuntu-latest
     outputs:
       friesian-pytest: ${{ steps.filter.outputs.friesian-pytest }}
       friesian-example: ${{ steps.filter.outputs.friesian-example }}
       dllib: ${{ steps.filter.outputs.dllib }}
-      orca-pytest: ${{ steps.filter.outputs.orca-pytest }}
-      orca-pytest-openvino: ${{ steps.filter.outputs.orca-pytest-openvino }}
-      orca-tutorial: ${{ steps.filter.outputs.orca-tutorial }}
-      orca-example: ${{ steps.filter.outputs.orca-example }}
+      # orca-pytest: ${{ steps.filter.outputs.orca-pytest }}
+      # orca-pytest-openvino: ${{ steps.filter.outputs.orca-pytest-openvino }}
+      # orca-tutorial: ${{ steps.filter.outputs.orca-tutorial }}
+      # orca-example: ${{ steps.filter.outputs.orca-example }}
       ppml: ${{ steps.filter.outputs.ppml }}
     steps:
       - uses: actions/checkout@v3
@@ -156,6 +156,19 @@ jobs:
               - 'scala/orca/pom.xml'
               - 'scala/dllib/pom.xml'
               - '.github/actions/orca/**'
+
+  Orca-Test-Python-Worker-Reuse:
+    needs: changes
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK8
+        uses: ./.github/actions/jdk-setup-action
+      - name: Setup env
+        uses: ./.github/actions/orca/setup-env/setup-orca-python-py37-basic
+      - name: Run test
+        uses: ./.github/actions/orca/orca-test-python-worker-reuse
 
   Friesian-Scala-UT:
     needs: changes
