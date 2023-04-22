@@ -22,27 +22,22 @@ spec:
           name: bigdl-home
         env:
         - name: http_proxy
-          value: "http://child-prc.intel.com:913"
+          value: "${http_proxy}"
         - name: https_proxy
-          value: "http://child-prc.intel.com:913"
+          value: "${https_proxy}"
         - name: no_proxy
-          value: "10.239.45.10:8081,10.112.231.51,10.239.45.10"
+          value: "${no_proxy}"
         command: ["/bin/bash", "-c"]
         args:
           - cd /workspace/python/orca/tutorial/NCF/;
-            echo "Install required dependency";
+            echo "Install required software";
             pip install tensorflow==2.9.0;
             echo "Start distributed training";
             python ./tf_train_spark_dataframe.py --dataset ml-100k;
             echo "Start distributed inference";
             python ./tf_predict_spark_dataframe.py --dataset ml-100k;
-        resources:
-          requests:
-            cpu: 8
-            memory: 32Gi
-          limits:
-            cpu: 10
-            memory: 40Gi
+            echo "Orca NCF tutorial is completed successfully";
+            exit;
       volumes:
       - name: bigdl-home
         hostPath:
