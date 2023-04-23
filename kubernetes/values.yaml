@@ -1,5 +1,5 @@
 # Configure the variables to be passed into the templates.
 
-httpProxy: http://child-prc.intel.com:913
-httpsProxy: http://child-prc.intel.com:913
-noProxy: 10.239.45.10:8081,10.112.231.51,10.239.45.10,172.168.3.110
+httpProxy: your_http_proxy
+httpsProxy: your_https_proxy
+noProxy: your_no_proxy
