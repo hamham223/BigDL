@@ -1,14 +1,14 @@
-# BigDL Orca Distribute Workflow
+# BigDL Distributed Training/Inference Workflow
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: bigdl-orca-ncf
+  name: bigdl-ncf
 spec:
   template:
     spec:
       restartPolicy: OnFailure
       containers:
-      - name: bigdl-distribute-workflow
+      - name: bigdl-workflow
         image: intelanalytics/bigdl-orca:latest
         imagePullPolicy: IfNotPresent
         volumeMounts:
@@ -23,22 +23,21 @@ spec:
           value: {{ .Values.noProxy }}
         command: ["/bin/bash", "-c"]
         args:
-          - cd /output/yinchen;
-            mkdir bigdl-distribute-workflow;
-            cd bigdl-distribute-workflow;
+          - mkdir /output/bigdl-distribute-workflow;
+            cd /output/bigdl-distribute-workflow;
             echo "Download dataset";
             wget "https://files.grouplens.org/datasets/movielens/ml-100k.zip" -O ml-100k.zip;
             unzip -o ./ml-100k.zip;
-            echo "Install required software";
             cd -;
+            echo "Install required software";
             git clone "https://github.com/intel-analytics/BigDL.git";
             cd BigDL/python/orca/tutorial/NCF;
             pip install tensorflow==2.9.0;
             echo "Start distributed training";
-            python ./tf_train_spark_dataframe.py --dataset ml-100k --data_dir /output/yinchen/bigdl-distribute-workflow --model_dir /output/yinchen/bigdl-distribute-workflow;
+            python ./tf_train_spark_dataframe.py --dataset ml-100k --data_dir /output/bigdl-distribute-workflow --model_dir /output/bigdl-distribute-workflow;
             echo "Start distributed inference";
-            python ./tf_predict_spark_dataframe.py --dataset ml-100k --data_dir /output/yinchen/bigdl-distribute-workflow --model_dir /output/yinchen/bigdl-distribute-workflow;
-            echo "Orca NCF tutorial is completed successfully";
+            python ./tf_predict_spark_dataframe.py --dataset ml-100k --data_dir /output/bigdl-distribute-workflow --model_dir /output/bigdl-distribute-workflow;
+            echo "BigDL NCF workflow has completed successfully";
             exit;
       volumes:
       - name: nfs-storage
